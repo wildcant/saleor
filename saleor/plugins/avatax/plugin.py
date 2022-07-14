@@ -213,7 +213,7 @@ class AvataxPlugin(BasePlugin):
                 # for some cases we will need a base_value but no need to call it for
                 # each line
                 base_value=SimpleLazyObject(  # type:ignore
-                    lambda: base_calculations.base_checkout_line_total(
+                    lambda: base_calculations.calculate_base_line_total_price(
                         line, checkout_info.channel, discounts
                     )
                 ),
@@ -532,13 +532,13 @@ class AvataxPlugin(BasePlugin):
         quantity = checkout_line_info.line.quantity
         taxes_data = get_checkout_tax_data(checkout_info, lines, discounts, self.config)
         default_total = previous_value * quantity
-        taxed_total_prices_data = self._calculate_checkout_line_total_price(
+        taxed_total_price = self._calculate_checkout_line_total_price(
             taxes_data,
             variant.sku or variant.get_global_id(),
             tax_included,
             default_total,
         )
-        return taxed_total_prices_data / quantity
+        return taxed_total_price / quantity
 
     def calculate_order_line_unit(
         self,
