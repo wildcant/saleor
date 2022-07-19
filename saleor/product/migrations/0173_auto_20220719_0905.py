@@ -11,10 +11,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name="productmedia",
-            name="to_remove",
-        ),
         migrations.AlterField(
             model_name="productmedia",
             name="product",
